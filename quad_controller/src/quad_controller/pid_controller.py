@@ -97,7 +97,8 @@ class PIDController:
         #filtered_error = self.set_point_ - filtered
         #delta_error = (filtered_error - self.last_error_) / delta_time
         #d = self.kd_ * delta_error
-        d = self.kd_ * (self.alpha * delta_error / delta_time + (1 - self.alpha))
+        #d = self.kd_ * (self.alpha * delta_error / delta_time + (1 - self.alpha))
+        d = self.kd_ * delta_error
         #self.previous_filtered = filtered
         ########################################
         
