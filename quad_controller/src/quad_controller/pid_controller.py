@@ -7,30 +7,35 @@
 class PIDController:
     def __init__(self, kp = 0.0, ki = 0.0, kd = 0.0, max_windup = 10):
         #TODO
-        pass
+        self.kp_ = kp
+        self.ki_ = ki
+        self.kd_ = kd
+        self.max_windup_ = max_windup
+
+
     def reset(self):
         #TODO
         pass
 
     def setTarget(self, target):
         #TODO
-        pass
+        self.target_ = target
 
     def setKP(self, kp):
         #TODO
-        pass
+        self.kp_ = kp
 
     def setKI(self, ki):
         #TODO
-        pass
+        self.ki_ = ki
 
     def setKD(self, kd):
         #TODO
-        pass
+        self.kd_ = kd
 
     def setMaxWindup(self, max_windup):
         #TODO
-        pass
+        self.max_windup_ = max_windup
 
     def update(self, measured_value, timestamp):
         #TODO
