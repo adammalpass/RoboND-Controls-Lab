@@ -55,6 +55,72 @@ class PIDController:
 
     def update(self, measured_value, timestamp):
         #TODO
-        pass
+        delta_time = timestamp - self.last_timestamp_
+        if delta_time == 0:
+            # Delta time is zero
+            return 0
+        
+        # Calculate the error 
+        error = self.target_ - measured_value
+        
+        # Set the last_timestamp_ 
+        self.last_timestamp_ = timestamp
+
+        # Sum the errors
+        self.error_sum_ += error * delta_time
+        
+        # Update the past error
+        self.last_error_ = error
+        
+        # Find delta_error
+        delta_error = error - self.last_error_
+        
+        # Address max windup
+        ########################################
+        if self.error_sum_ > self.max_windup_:
+            self.error_sum_ = self.max_windup_
+        elif self.error_sum_ < -self.max_windup_:
+            self.error_sum_ = -self.max_windup_
+
+        ########################################
+        
+        # Proportional error
+        p = self.kp_ * error
+       
+        # Integral error
+        i = self.ki_ * self.error_sum_
+       
+        # Recalculate the derivative error here incorporating 
+        # derivative smoothing!
+        ########################################
+        #filtered = self.previous_filtered + self.alpha*(measured_value - self.previous_filtered)
+        #filtered_error = self.set_point_ - filtered
+        #delta_error = (filtered_error - self.last_error_) / delta_time
+        #d = self.kd_ * delta_error
+        d = self.kd_ * (self.alpha * delta_error / delta_time + (1 - self.alpha))
+        #self.previous_filtered = filtered
+        ########################################
+        
+        # Set the control effort
+        u = p + i + d
+        
+        # Enforce actuator saturation limits
+        ########################################
+
+        #if u > self.umax:
+        #    u = self.umax
+        #elif u < self.umin:
+        #    u = self.umin
+
+
+        ########################################
+    
+        # Here we are storing the control effort history for post control
+        # observations. 
+        #self.u_p.append(p)
+        #self.u_i.append(i)
+        #self.u_d.append(d)
+
+        return u
 
 
