@@ -12,10 +12,26 @@ class PIDController:
         self.kd_ = kd
         self.max_windup_ = max_windup
 
+        # Store relevant data
+        self.last_timestamp_ = 0.0
+        self.target_ = 0.0
+        #self.start_time_ = start_time
+        self.error_sum_ = 0.0
+        self.last_error_ = 0.0
+
 
     def reset(self):
         #TODO
-        pass
+        self.target_ = 0.0
+        self.kp_ = 0.0
+        self.ki_ = 0.0
+        self.kd_ = 0.0
+        
+        self.error_sum_ = 0.0
+        self.last_timestamp_ = 0.0
+        self.last_error_ = 0
+        #self.last_last_error_ = 0
+        #self.last_windup_ = 0.0
 
     def setTarget(self, target):
         #TODO
